@@ -1,0 +1,21 @@
+name: File Sorter Checker
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        test-type: [basic, bonus]
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      
+      - name: Make scripts executable
+        run: chmod +x files_sorter.bash .github/scripts/checker
+      
+      - name: Run ${{ matrix.test-type }} test
+        run: ./.github/scripts/checker ${{ matrix.test-type }}
